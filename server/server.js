@@ -1,6 +1,17 @@
-const express = require('express')
-const app = express()
+// server/server.js
+const express = require('express');
+const Sequelize = require('sequelize');
+const pg = require('pg');
 
-app.get('/', (req, res) => res.send('Hello World!'))
+const app = express();
+const sequelize = new Sequelize('my_database', 'username', 'password', {
+  host: 'localhost',
+  dialect: 'postgres'
+});
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+// Set up routes
+app.use('/api/items', require('./routes/items'));
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
